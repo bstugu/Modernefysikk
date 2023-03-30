@@ -7,4 +7,8 @@ https://www.anaconda.com/ (gratis for privat bruk)
 
 De fleste programmene har parametere som settes i selve koden, eller som leses inn interaktivt. 
 Vi skal prøve å gjøre koden oversiktlig og lett å bruke.
+
+Svar på en sannsynlig FAQ: Du kan laste ned filene som .zip ved kommandoen oppe i høyre hjørne.
+Det er sannsynlig at datamaskinen din vet hvordan du kan pakke ut .zip fila etter at den er lastet ned.
+
 Bjarne Stugu, 30/3-2023
