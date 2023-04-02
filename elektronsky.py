@@ -18,7 +18,8 @@ def psi(x,n,l):         # Define your function here
     # Laguerre polynomet  i Python er annerledes definert enn i Hemmer.
     # (Se kommentar i lærebok i QM av Amit Goswami)
     # Har ikke funnet ut av normeringen med denne definisjonen
-    N = 1
+    # Men man er i nærheten slik
+    N = 1/sp.factorial(n)
     a = 0.529  # Bohr-radien i Ångstrøm)
     rho = 2*x/(n*a)
     y = N*(rho**l)*np.exp(-.5*rho)*sp.assoc_laguerre(rho,n-l-1,2*l+1)
@@ -30,9 +31,8 @@ values = line.split()
 n = int(values[0])
 l = int(values[1])
 m = int(values[2])
+print("Lukk tetthetsplottet for å begynne simulering av elektronsky! (SOM KAN TA LITT TID)")
 while n>0 :
-
-    valg = 2   # Valg = 1: psi**2    Noe annet:  (r*psi)**2
     nbins = 200
     # Skala defineres utfra forventet midlere avstand
     #  som er .529*(3*n**2 - l**2-l)
@@ -53,23 +53,20 @@ while n>0 :
             theta = abs(np.arccos(zz/r))
             wr = psi(r,n,l)
             ww = sp.sph_harm(int(m),int(l),phi,theta)
-            if valg == 1:
-                weight = (wr*ww.real)**2
-
-            else:
-                weight = (r*wr*ww.real)**2
+            weight = (r*wr*ww.real)**2
             if weight > wmax:
                wmax = weight 	
             w.append(weight)
             x.append(xx)
             z.append(zz)
-    plt.hist2d(x,z,bins=nbins,weights=w)
-    print("Lukk plottet for å begynne simulering ! (SOM KAN TA LITT TID)")
+    plt.hist2d(x,z,bins=nbins,weights=w)    
     plt.show()
     print("Maksimumverdi i sannsynlighetsfunksjon", wmax) # maksimumsverdi i tetthetsplottet, trengs for MC simulering
     
     # her begynner MonteCarlo-simulering
-    ntries = 500000
+    line = input("Skriv inn antall forsøk i simulering (typisk noen hundre tusen): ")
+    values = line.split()
+    ntries = int(values[0]) 
     npinarray = 0
     xdata = []
     ydata = []
@@ -89,10 +86,7 @@ while n>0 :
        theta = np.arccos(zz/r)            
        wr = psi(r,n,l)
        ww = sp.sph_harm(int(m),int(l),0.,theta)
-       if valg == 1:
-          weight = (wr*ww.real)**2
-       else:
-          weight = (r*wr*ww.real)**2  
+       weight = (r*wr*ww.real)**2  
        # sjekke sannsynligheten av dette punktet, akseptere med frekvens i henhold til sannsynlighet         
        if weight > trtry[k]:
           npinarray = npinarray + 1

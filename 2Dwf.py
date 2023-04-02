@@ -15,7 +15,8 @@ def psi(x,n,l):         # Define your function here
     # Laguerre polynomet  i Python er annerledes definert enn i Hemmer.
     # (Se kommentar i lærebok i QM av Amit Goswami)
     # Har ikke funnet ut av normeringen med denne definisjonen
-    N = 1
+    # men setter inn noe som ikke er helt på trynet
+    N = 1/sp.factorial(n)
     a = 0.529  # Bohr-radien i Ångstrøm)
     rho = 2*x/(n*a)
     y = N*(rho**l)*np.exp(-.5*rho)*sp.assoc_laguerre(rho,n-l-1,2*l+1)
@@ -38,7 +39,21 @@ if valg > 0:
    m = int(values[2])
 
 while valg>0 :
-    nbins = 200
+    costh = -1.
+    dcosth = .01
+    bins = int(2/dcosth)
+    norm = 0.
+    for i in range(bins):
+       th = np.arccos(costh)
+       wttst = sp.sph_harm(int(m),int(l),0.,th)
+       wrtst = (wttst.real)**2
+       #print("wttst ",wttst," wrtst ",wrtst)
+       norm = norm + wrtst*dcosth
+       costh = costh+dcosth
+    print("norm ",6.28*norm)
+    lowest = 1.0e20
+    highest = -1.0e20
+    nbins = 20
     # Skala defineres utfra forventet midlere avstand
     #  som er .529*(3*n**2 - l**2-l)
     rm =  n**2
@@ -56,15 +71,27 @@ while valg>0 :
             theta = abs(np.arccos(zz/r))
             wr = psi(r,n,l)
             ww = sp.sph_harm(int(m),int(l),phi,theta)
+            print("xx ",xx," zz ",zz, " r ",r," wr ",wr)#"ww ",ww)
             if valg == 1:
                 weight = (wr*ww.real)**2
             elif valg == 2:
                 weight = wr*ww.real
+                if weight > highest:
+                    highest = weight
+                if weight < lowest:
+                    lowest = weight
             elif valg == 3:
                 weight = np.abs(wr*ww.real)
-            
+                if weight > highest:
+                    highest = weight
+                if weight < lowest:
+                    lowest = weight           
             else:
-                weight = (r*wr*ww.real)**2	
+                weight = (r*wr*ww.real)**2
+                if weight > highest:
+                    highest = weight
+                if weight < lowest:
+                    lowest = weight               	
             w.append(weight)
             x.append(xx)
             z.append(zz)
@@ -83,6 +110,8 @@ while valg>0 :
     plt.xlabel(" x/$10^{-10}$ m ")
     plt.ylabel(" z/$10^{-10}$ m ")
     #plt.hist2d(x,z,bins=nbins,weights=w,norm=LogNorm())
+    print(" Lowest ", lowest)
+    print(" Highest",highest)
     plt.show()   # Show the plot (Without this you don't see anything on the screen)
     line = input("Tast valg (0 betyr avslutt): ")
     valg = int(line)
