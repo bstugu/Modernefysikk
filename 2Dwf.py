@@ -53,7 +53,7 @@ while valg>0 :
     print("norm ",6.28*norm)
     lowest = 1.0e20
     highest = -1.0e20
-    nbins = 20
+    nbins = 200
     # Skala defineres utfra forventet midlere avstand
     #  som er .529*(3*n**2 - l**2-l)
     rm =  n**2
@@ -71,7 +71,7 @@ while valg>0 :
             theta = abs(np.arccos(zz/r))
             wr = psi(r,n,l)
             ww = sp.sph_harm(int(m),int(l),phi,theta)
-            print("xx ",xx," zz ",zz, " r ",r," wr ",wr)#"ww ",ww)
+        
             if valg == 1:
                 weight = (wr*ww.real)**2
             elif valg == 2:
