@@ -67,6 +67,8 @@ while valg>0 :
         for j in range(nbins):
             phi = 0.  # Vi bruker verdien for phi=0
             xx = -rm + 2*j*rm/float(nbins)+bw2
+            if xx < 0.:
+                phi = 3.14159265
             r = np.sqrt(xx**2+zz**2)
             theta = abs(np.arccos(zz/r))
             wr = psi(r,n,l)
