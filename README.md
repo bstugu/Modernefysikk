@@ -12,3 +12,5 @@ Svar på en sannsynlig FAQ: Du kan laste ned filene som .zip ved kommandoen oppe
 Det er sannsynlig at datamaskinen din vet hvordan du kan pakke ut .zip fila etter at den er lastet ned.
 
 Bjarne Stugu, 30/3-2023
+
+November 2023: Læreboka er også lagt til her, som 'Boka.pdf'
