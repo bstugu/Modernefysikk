@@ -13,4 +13,4 @@ Det er sannsynlig at datamaskinen din vet hvordan du kan pakke ut .zip fila ette
 
 Bjarne Stugu, 30/3-2023
 
-April 2023: Oppdatert læreboka er også lagt til her, som 'Boka_V2.pdf'
+April 2024: Oppdatert læreboka er også lagt til her, som 'Boka_V2.pdf'
